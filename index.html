@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medielivate Healthcare</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-blue: #1e3a8a;
+            --sky-blue: #38bdf8;
+            --light-bg: #f0f9ff;
+            --white: #ffffff;
+            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+            --emergency-red: #ef4444;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-bg);
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* SIDEBAR DRAWER */
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 2000;
+            top: 0;
+            right: 0;
+            background-color: var(--dark-blue);
+            overflow-x: hidden;
+            transition: 0.4s;
+            padding-top: 60px;
+            box-shadow: -5px 0 15px rgba(0,0,0,0.3);
+        }
+
+        .sidebar a {
+            padding: 12px 24px;
+            text-decoration: none;
+            font-size: 16px;
+            color: var(--white);
+            display: block;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .sidebar a i { margin-right: 15px; width: 20px; text-align: center; }
+        .sidebar .close-btn {
+            position: absolute;
+            top: 10px; left: 20px;
+            font-size: 30px; color: white; cursor: pointer;
+        }
+
+        /* HEADER */
+        header {
+            background: var(--white);
+            padding: 15px 5%;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .brand-container { text-align: center; margin-bottom: 15px; }
+        .brand-name {
+            font-weight: 800;
+            font-size: 2rem;
+            color: var(--dark-blue);
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .brand-name span { color: var(--sky-blue); }
+        .brand-sub { font-size: 0.7rem; letter-spacing: 4px; color: var(--dark-blue); margin-top: -5px; }
+
+        .header-bottom-row { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .user-info { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+        .search-bar {
+            flex-grow: 1;
+            background: #f1f5f9;
+            border-radius: 25px;
+            padding: 8px 15px;
+            display: flex;
+            align-items: center;
+            border: 1px solid #e2e8f0;
+        }
+        .search-bar input { border: none; background: transparent; outline: none; width: 100%; }
+        .menu-btn { font-size: 1.5rem; color: var(--dark-blue); cursor: pointer; }
+
+        /* DASHBOARD & PAGES */
+        .page { display: none; max-width: 1200px; margin: 2rem auto; padding: 0 1rem; padding-bottom: 120px; }
+        .active-page { display: block; }
+
+        /* SERVICE GRID */
+        .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 2rem; }
+        .service-card {
+            background: var(--white); padding: 1.2rem; border-radius: 15px;
+            text-align: center; transition: 0.3s; box-shadow: var(--shadow); cursor: pointer;
+        }
+        .service-card:hover { transform: translateY(-5px); border: 1px solid var(--sky-blue); }
+        .service-card i { font-size: 1.8rem; color: var(--dark-blue); margin-bottom: 8px; }
+        .service-card p { font-size: 0.8rem; font-weight: 600; margin: 0; }
+
+        /* CATEGORY SCROLL & SUB-SEARCH */
+        .category-scroll { display: flex; overflow-x: auto; gap: 10px; padding: 10px 0; scrollbar-width: none; }
+        .category-item { 
+            background: white; border: 1px solid var(--sky-blue); padding: 8px 15px; 
+            border-radius: 20px; white-space: nowrap; font-size: 0.8rem; cursor: pointer;
+        }
+        .sub-search-box { background: white; border: 1px solid #ddd; padding: 12px; border-radius: 10px; margin: 10px 0; display: flex; justify-content: space-between; align-items: center; }
+        .sub-search-box input { border: none; outline: none; width: 80%; }
+        .sub-link { color: var(--sky-blue); font-size: 0.8rem; cursor: pointer; text-decoration: underline; }
+
+        /* EMERGENCY LIST */
+        .emergency-item {
+            background: white; padding: 18px; border-radius: 12px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: var(--shadow); border-left: 5px solid var(--emergency-red);
+            margin-bottom: 10px; text-decoration: none; color: inherit;
+        }
+        .emergency-item i { color: var(--emergency-red); font-size: 1.3rem; }
+
+        /* ADS SECTION */
+        .ads-section { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin: 2rem 0; }
+        .ad-block {
+            background: linear-gradient(135deg, var(--dark-blue), var(--sky-blue));
+            color: white; aspect-ratio: 1/1; border-radius: 15px;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 10px; font-size: 0.8rem;
+        }
+        .ad-block i { font-size: 1.5rem; margin-bottom: 5px; }
+
+        /* FAQ & ARTICLES */
+        .content-section { margin-top: 30px; }
+        .content-section h3 { color: var(--dark-blue); margin-bottom: 15px; }
+        .faq-item, .article-card {
+            background: white; padding: 15px; border-radius: 12px; 
+            box-shadow: var(--shadow); margin-bottom: 10px;
+        }
+        .article-card h4 { margin: 0 0 5px 0; color: var(--dark-blue); }
+        .article-card p { margin: 0; font-size: 0.85rem; color: #666; }
+
+        /* PROFILE FORM & BUTTONS */
+        .form-section { background: white; padding: 20px; border-radius: 15px; box-shadow: var(--shadow); margin-bottom: 20px; }
+        .form-section h3 { margin-top: 0; color: var(--dark-blue); border-bottom: 2px solid var(--sky-blue); padding-bottom: 10px; }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+        .input-group { display: flex; flex-direction: column; }
+        .input-group label { font-size: 0.8rem; font-weight: bold; margin-bottom: 5px; color: #555; }
+        .input-group input, .input-group select, .input-group textarea {
+            padding: 10px; border: 1px solid #ddd; border-radius: 8px; outline: none;
+        }
+        .save-btn {
+            background: var(--dark-blue); color: white; border: none; padding: 15px 30px;
+            border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; font-size: 1rem;
+        }
+
+        /* BOTTOM NAV */
+        .bottom-nav {
+            position: fixed; bottom: 0; width: 100%; background: var(--white);
+            display: flex; justify-content: space-around; padding: 1rem 0;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1); z-index: 1000;
+        }
+        .nav-item { text-align: center; color: var(--dark-blue); text-decoration: none; font-size: 0.8rem; }
+        .nav-item i { font-size: 1.3rem; display: block; }
+
+        @media (max-width: 768px) {
+            .service-grid, .ads-section { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="mySidebar" class="sidebar">
+        <span class="close-btn" onclick="closeNav()">&times;</span>
+        <a href="#" onclick="showPage('home')"><i class="fas fa-home"></i> Dashboard</a>
+        <a href="#"><i class="fas fa-calendar-check"></i> Bookings</a>
+        <a href="#"><i class="fas fa-user-md"></i> Appointments</a>
+        <a href="#"><i class="fas fa-video"></i> Consultance History</a>
+        <a href="#"><i class="fas fa-file-invoice-dollar"></i> My Insurance</a>
+        <a href="#"><i class="fas fa-shopping-cart"></i> My Orders</a>
+        <a href="#"><i class="fas fa-flask"></i> My Tests</a>
+        <a href="#"><i class="fas fa-credit-card"></i> Payments</a>
+        <a href="#"><i class="fas fa-bell"></i> Reminders</a>
+        <a href="#"><i class="fas fa-qrcode"></i> Medicine Scanner</a>
+        <a href="#"><i class="fas fa-question-circle"></i> Help</a>
+        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+        <a href="#"><i class="fas fa-star"></i> Rate Us</a>
+    </div>
+
+    <header>
+        <div class="brand-container">
+            <h1 class="brand-name">MEDI<span>ELIVATE</span></h1>
+            <div class="brand-sub">HEALTHCARE</div>
+        </div>
+        
+        <div class="header-bottom-row">
+            <div class="user-info" onclick="showPage('profile')">
+                <i class="fas fa-user-circle fa-2x" style="color: var(--dark-blue)"></i>
+                <div>
+                    <strong id="display-name" style="display:block; font-size: 0.9rem;">John Doe</strong>
+                    <small style="font-size: 0.7rem; color: #666;"><i class="fas fa-location-dot"></i> Agartala, India</small>
+                </div>
+            </div>
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search services...">
+            </div>
+            <div class="menu-btn" onclick="openNav()"><i class="fas fa-bars"></i></div>
+        </div>
+    </header>
+
+    <div id="home" class="page active-page">
+        <div class="service-grid">
+            <div class="service-card" onclick="showPage('hospital-pg')"><i class="fas fa-hospital"></i><p>Hospital Booking</p></div>
+            <div class="service-card" onclick="showPage('physical-pg')"><i class="fas fa-stethoscope"></i><p>Physical Appt</p></div>
+            <div class="service-card" onclick="showPage('video-pg')"><i class="fas fa-video"></i><p>Video Consult</p></div>
+            <div class="service-card"><i class="fas fa-shield-alt"></i><p>Insurance</p></div>
+            <div class="service-card" onclick="showPage('medicine-pg')"><i class="fas fa-pills"></i><p>Medicines</p></div>
+            <div class="service-card" onclick="showPage('lab-pg')"><i class="fas fa-microscope"></i><p>Lab Tests</p></div>
+            <div class="service-card" style="background: #fee2e2;" onclick="showPage('emergency-pg')"><i class="fas fa-ambulance" style="color: #ef4444;"></i><p>Emergency</p></div>
+            <div class="service-card"><i class="fas fa-heartbeat"></i><p>Health Data</p></div>
+        </div>
+
+        <h3>Special Offers & Services</h3>
+        <div class="ads-section">
+            <div class="ad-block"><i class="fas fa-tag"></i>20% OFF<br>Lab Tests</div>
+            <div class="ad-block"><i class="fas fa-truck"></i>Free Home<br>Delivery</div>
+            <div class="ad-block"><i class="fas fa-heartbeat"></i>Full Body<br>Checkup</div>
+            <div class="ad-block"><i class="fas fa-shield-check"></i>Insurance<br>@ ₹499</div>
+        </div>
+
+        <div class="content-section">
+            <h3>Health Articles</h3>
+            <div class="article-card">
+                <h4>5 Tips for a Healthy Heart</h4>
+                <p>Discover the best daily habits to keep your cardiovascular system in top shape...</p>
+            </div>
+            <div class="article-card">
+                <h4>Understanding Your Lab Results</h4>
+                <p>A simple guide to help you read and understand common medical test reports...</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3>Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <strong>How do I book an emergency ambulance?</strong>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">Simply click the "Emergency" red block on the home screen for instant service.</p>
+            </div>
+            <div class="faq-item">
+                <strong>Are online consultations private?</strong>
+                <p style="font-size: 0.85rem; color: #666; margin-top: 5px;">Yes, all Medielivate video consultations are end-to-end encrypted for your safety.</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h3 style="color: var(--emergency-red);">Emergency Services</h3>
+            <div class="emergency-list">
+                <a href="tel:102" class="emergency-item"><div><strong>Emergency Hospital No</strong></div><i class="fas fa-hospital-alt"></i></a>
+                <a href="tel:108" class="emergency-item"><div><strong>Emergency Dr No</strong></div><i class="fas fa-user-md"></i></a>
+                <a href="tel:108" class="emergency-item"><div><strong>Ambulance</strong></div><i class="fas fa-ambulance"></i></a>
+                <a href="#" class="emergency-item" onclick="showPage('video-pg')"><div><strong>Emergency Video Consultant</strong></div><i class="fas fa-video"></i></a>
+                <a href="#" class="emergency-item"><div><strong>Emergency Chat with Dr</strong></div><i class="fas fa-comment-medical"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="hospital-pg" class="page">
+        <button onclick="showPage('home')" class="save-btn" style="width: auto; padding: 10px 20px; margin-bottom: 15px;"><i class="fas fa-arrow-left"></i> Back</button>
+        <h3>Categories</h3>
+        <div class="category-scroll">
+            <div class="category-item">Skin & Hair</div><div class="category-item">Women's Health</div><div class="category-item">Men's Health</div>
+            <div class="category-item">Chronic Problem</div><div class="category-item">Bones & Joints</div><div class="category-item">Sexual Health</div>
+            <div class="category-item">Child Health</div><div class="category-item">Dental</div><div class="category-item">Mental Health</div>
+            <div class="category-item">ENT</div><div class="category-item">General</div><div class="category-item">Eye</div>
+            <div class="category-item">Heart</div><div class="category-item">Physiotherapy</div><div class="category-item">Brain & Nerves</div>
+            <div class="category-item">Kidney</div><div class="category-item">Cancer</div><div class="category-item">Ayurveda</div><div class="category-item">Homeopathy</div>
+        </div>
+        <div class="sub-search-box"><input type="text" placeholder="Search Hospital Name..."><span class="sub-link">View All</span></div>
+        <div class="sub-search-box"><input type="text" placeholder="Search Symptoms..."><span class="sub-link">View All</span></div>
+        <div class="sub-search-box"><input type="text" placeholder="Search Surgeries..."><span class="sub-link">View All</span></div>
+    </div>
+
+    <div id="physical-pg" class="page">
+        <button onclick="showPage('home')" class="save-btn" style="width: auto; padding: 10px 20px; margin-bottom: 15px;"><i class="fas fa-arrow-left"></i> Back</button>
+        <h3>Categories</h3>
+        <div class="category-scroll">
+            <div class="category-item">Skin & Hair</div><div class="category-item">Women's Health</div><div class="category-item">Men's Health</div>
+            <div class="category-item">Chronic Problem</div><div class="category-item">Bones & Joints</div><div class="category-item">Sexual Health</div>
+            <div class="category-item">Child Health</div><div class="category-item">Dental</div><div class="category-item">Mental Health</div>
+            <div class="category-item">ENT</div><div class="category-item">General</div><div class="category-item">Eye</div>
+            <div class="category-item">Heart</div><div class="category-item">Physiotherapy</div><div class="category-item">Brain & Nerves</div>
+            <div class="category-item">Kidney</div><div class="category-item">Cancer</div><div class="category-item">Ayurveda</div><div class="category-item">Homeopathy</div>
+        </div>
+        <div class="sub-search-box"><input type="text" placeholder="Dr. Name / Clinic Name..."><span class="sub-link">View All</span></div>
+        <div class="sub-search-box"><input type="text" placeholder="Symptoms..."><span class="sub-link">View All</span></div>
+        <div class="sub-search-box"><input type="text" placeholder="Surgeries..."><span class="sub-link">View All</span></div>
+    </div>
+
+    <div id="video-pg" class="page">
+        <button onclick="showPage('home')" class="save-btn" style="width: auto; padding: 10px 20px; margin-bottom: 15px;"><i class="fas fa-arrow-left"></i> Back</button>
+        <h3>Available Doctors for Video Call</h3>
+        <div class="article-card">
+            <h4>Dr. Sharma (General Medicine)</h4>
+            <p>Available Now • Instant Connect</p>
+            <button class="save-btn" style="width: auto; padding: 5px 15px;">Connect</button>
+        </div>
+        <div class="article-card">
+            <h4>Dr. Iyer (Pediatrics)</h4>
+            <p>Next available in 10 mins</p>
+        </div>
+    </div>
+
+    <div id="medicine-pg" class="page">
+        <button onclick="showPage('home')" class="save-btn" style="width: auto; padding: 10px 20px; margin-bottom: 15px;"><i class="fas fa-arrow-left"></i> Back</button>
+        <div class="sub-search-box">
+            <input type="text" placeholder="Search Medicines & Products...">
+            <i class="fas fa-camera" style="color: var(--dark-blue); cursor: pointer;" onclick="alert('Accessing Camera...')"></i>
+        </div>
+        <h3>Product Categories</h3>
+        <div class="category-scroll">
+            <div class="category-item">Prescription</div><div class="category-item">Wellness</div><div class="category-item">Baby Care</div><div class="category-item">Personal Care</div>
+        </div>
+    </div>
+
+    <div id="lab-pg" class="page">
+        <button onclick="showPage('home')" class="save-btn" style="width: auto; padding: 10px 20px; margin-bottom: 15px;"><i class="fas fa-arrow-left"></i> Back</button>
+        <div class="sub-search-box"><input type="text" placeholder="Search Labs / Tests..."></div>
+        <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+            <button class="save-btn" style="background:#25d366; font-size: 0.8rem;"><i class="fab fa-whatsapp"></i> Book via WhatsApp</button>
+            <button class="save-btn" style="font-size: 0.8rem;"><i class="fas fa-phone"></i> Book via Call</button>
+        </div>
+        <div class="article-card"><h4>NITA Diagnostic Lab</h4><p>Lab Available • Complete Blood Count (CBC) • ₹299</p></div>
+    </div>
+
+    <div id="emergency-pg" class="page">
+        <button onclick="showPage('home')" class="save-btn" style="width: auto; padding: 10px 20px; margin-bottom: 20px; background: #555;"><i class="fas fa-arrow-left"></i> Back</button>
+        <h2 style="color: var(--emergency-red);">Emergency Response</h2>
+        <div class="emergency-list">
+            <a href="tel:102" class="emergency-item"><div><strong>Emergency Hospital No</strong></div><i class="fas fa-hospital-alt"></i></a>
+            <a href="tel:108" class="emergency-item"><div><strong>Emergency Dr No</strong></div><i class="fas fa-user-md"></i></a>
+            <a href="tel:108" class="emergency-item"><div><strong>Ambulance</strong></div><i class="fas fa-ambulance"></i></a>
+        </div>
+    </div>
+
+    <div id="profile" class="page">
+        <button onclick="showPage('home')" style="margin-bottom: 20px; border: none; background: none; color: var(--dark-blue); cursor: pointer; font-size: 1rem;">
+            <i class="fas fa-arrow-left"></i> Back to Dashboard
+        </button>
+        <div class="form-section">
+            <h3>1. Identity & Contact</h3>
+            <div class="form-grid">
+                <div class="input-group"><label>Full Name</label><input type="text" id="name" placeholder="John Doe"></div>
+                <div class="input-group"><label>Account Name</label><input type="text" placeholder="User ID"></div>
+                <div class="input-group"><label>Contact No</label><input type="tel" placeholder="+91"></div>
+                <div class="input-group"><label>Email ID</label><input type="email" placeholder="email@domain.com"></div>
+                <div class="input-group"><label>Emergency No</label><input type="tel" placeholder="Emergency Contact"></div>
+                <div class="input-group"><label>Location</label><input type="text" placeholder="City, State"></div>
+            </div>
+        </div>
+        <div class="form-section">
+            <h3>2. Biometrics</h3>
+            <div class="form-grid">
+                <div class="input-group"><label>Gender</label><select><option>Male</option><option>Female</option><option>Other</option></select></div>
+                <div class="input-group"><label>Date of Birth</label><input type="date"></div>
+                <div class="input-group"><label>Height (cm)</label><input type="number"></div>
+                <div class="input-group"><label>Weight (kg)</label><input type="number"></div>
+                <div class="input-group"><label>Blood Group</label><select><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select></div>
+            </div>
+        </div>
+        <div class="form-section">
+            <h3>3. Medical History</h3>
+            <div class="input-group" style="margin-bottom: 15px;"><label>Current Diseases</label><textarea rows="2"></textarea></div>
+            <div class="input-group" style="margin-bottom: 15px;"><label>Injuries & Surgeries</label><textarea rows="2"></textarea></div>
+            <div class="input-group"><label>Current & Past Medications</label><textarea rows="2"></textarea></div>
+        </div>
+        <div class="form-section">
+            <h3>4. Lifestyle Habits</h3>
+            <div class="form-grid">
+                <div class="input-group"><label>Smoking Habit</label><select><option>Non-smoker</option><option>Occasional</option><option>Regular</option></select></div>
+                <div class="input-group"><label>Alcohol Consumption</label><select><option>Non-drinker</option><option>Occasional</option><option>Regular</option></select></div>
+            </div>
+        </div>
+        <button class="save-btn" onclick="saveProfile()">Save Health Profile</button>
+    </div>
+
+    <nav class="bottom-nav">
+        <a href="#" class="nav-item" onclick="showPage('home')"><i class="fas fa-home"></i>Home</a>
+        <a href="#" class="nav-item"><i class="fas fa-file-medical"></i>Health Plans</a>
+        <a href="#" class="nav-item"><i class="fas fa-comments"></i>Chat</a>
+    </nav>
+
+    <script>
+        function openNav() { document.getElementById("mySidebar").style.width = "280px"; }
+        function closeNav() { document.getElementById("mySidebar").style.width = "0"; }
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(pageId).classList.add('active-page');
+            window.scrollTo(0, 0);
+            if(pageId === 'home') closeNav();
+        }
+        function saveProfile() {
+            const nameInput = document.getElementById('name').value;
+            if(nameInput) { document.getElementById('display-name').innerText = nameInput; }
+            alert("Medielivate Health Profile Updated!");
+            showPage('home');
+        }
+    </script>
+</body>
+</html>
