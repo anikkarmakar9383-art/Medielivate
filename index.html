@@ -1,518 +1,2452 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Medielevate Healthcare</title>
-
-<link rel="stylesheet"
-href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"/>
-
-<style>
-
-:root{
---dark-blue:#1e3a8a;
---sky-blue:#38bdf8;
---light-bg:#f0f9ff;
---white:#ffffff;
---shadow:0 4px 6px -1px rgb(0 0 0 / 0.1);
---emergency-red:#ef4444;
-}
-
-body{
-margin:0;
-font-family:"Inter",sans-serif;
-background-color:var(--light-bg);
-color:#333;
-overflow-x:hidden;
-}
-
-/* SIDEBAR */
-
-.sidebar{
-height:100%;
-width:0;
-position:fixed;
-z-index:2000;
-top:0;
-right:0;
-background-color:var(--dark-blue);
-overflow-x:hidden;
-transition:0.4s;
-padding-top:60px;
-box-shadow:-5px 0 15px rgba(0,0,0,0.3);
-}
-
-.sidebar a{
-padding:12px 24px;
-text-decoration:none;
-font-size:16px;
-color:var(--white);
-display:block;
-border-bottom:1px solid rgba(255,255,255,0.1);
-}
-
-.sidebar a i{
-margin-right:15px;
-width:20px;
-text-align:center;
-}
-
-.sidebar .close-btn{
-position:absolute;
-top:10px;
-left:20px;
-font-size:30px;
-color:white;
-cursor:pointer;
-}
-
-/* HEADER */
-
-header{
-background:var(--white);
-padding:15px 5%;
-box-shadow:var(--shadow);
-position:sticky;
-top:0;
-z-index:1000;
-}
-
-.brand-container{
-text-align:center;
-margin-bottom:15px;
-}
-
-.brand-name{
-font-weight:900;
-font-size:2rem;
-color:var(--dark-blue);
-letter-spacing:2px;
-margin:0;
-}
-
-.brand-sub{
-font-size:0.7rem;
-letter-spacing:6px;
-color:var(--dark-blue);
-margin-top:-5px;
-}
-
-.header-bottom-row{
-display:flex;
-justify-content:space-between;
-align-items:center;
-gap:15px;
-}
-
-.user-info{
-display:flex;
-align-items:center;
-gap:10px;
-cursor:pointer;
-}
-
-.search-bar{
-flex-grow:1;
-background:#f1f5f9;
-border-radius:25px;
-padding:8px 15px;
-display:flex;
-align-items:center;
-border:1px solid #e2e8f0;
-}
-
-.search-bar input{
-border:none;
-background:transparent;
-outline:none;
-width:100%;
-}
-
-.menu-btn{
-font-size:1.5rem;
-color:var(--dark-blue);
-cursor:pointer;
-}
-
-/* PAGES */
-
-.page{
-display:none;
-max-width:1200px;
-margin:2rem auto;
-padding:0 1rem;
-padding-bottom:120px;
-}
-
-.active-page{
-display:block;
-}
-
-/* SERVICES */
-
-.service-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:1rem;
-margin-bottom:2rem;
-}
-
-.service-card{
-background:var(--white);
-padding:1.2rem;
-border-radius:15px;
-text-align:center;
-transition:0.3s;
-box-shadow:var(--shadow);
-cursor:pointer;
-}
-
-.service-card:hover{
-transform:translateY(-5px);
-border:1px solid var(--sky-blue);
-}
-
-.service-card i{
-font-size:1.8rem;
-color:var(--dark-blue);
-margin-bottom:8px;
-}
-
-.service-card p{
-font-size:0.8rem;
-font-weight:600;
-margin:0;
-}
-
-/* CATEGORY */
-
-.category-scroll{
-display:flex;
-overflow-x:auto;
-gap:10px;
-padding:10px 0;
-scrollbar-width:none;
-}
-
-.category-item{
-background:white;
-border:1px solid var(--sky-blue);
-padding:8px 15px;
-border-radius:20px;
-white-space:nowrap;
-font-size:0.8rem;
-cursor:pointer;
-}
-
-/* SEARCH BOX */
-
-.sub-search-box{
-background:white;
-border:1px solid #ddd;
-padding:12px;
-border-radius:10px;
-margin:10px 0;
-display:flex;
-justify-content:space-between;
-align-items:center;
-}
-
-.sub-search-box input{
-border:none;
-outline:none;
-width:80%;
-}
-
-.sub-link{
-color:var(--sky-blue);
-font-size:0.8rem;
-cursor:pointer;
-text-decoration:underline;
-}
-
-/* EMERGENCY */
-
-.emergency-item{
-background:white;
-padding:18px;
-border-radius:12px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-box-shadow:var(--shadow);
-border-left:5px solid var(--emergency-red);
-margin-bottom:10px;
-text-decoration:none;
-color:inherit;
-}
-
-.emergency-item i{
-color:var(--emergency-red);
-font-size:1.3rem;
-}
-
-/* ADS */
-
-.ads-section{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:1rem;
-margin:2rem 0;
-}
-
-.ad-block{
-background:linear-gradient(135deg,var(--dark-blue),var(--sky-blue));
-color:white;
-aspect-ratio:1/1;
-border-radius:15px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:10px;
-font-size:0.8rem;
-}
-
-.ad-block i{
-font-size:1.5rem;
-margin-bottom:5px;
-}
-
-/* CONTENT */
-
-.content-section{
-margin-top:30px;
-}
-
-.content-section h3{
-color:var(--dark-blue);
-margin-bottom:15px;
-}
-
-.article-card,.faq-item{
-background:white;
-padding:15px;
-border-radius:12px;
-box-shadow:var(--shadow);
-margin-bottom:10px;
-}
-
-.article-card h4{
-margin:0 0 5px 0;
-color:var(--dark-blue);
-}
-
-.article-card p{
-margin:0;
-font-size:0.85rem;
-color:#666;
-}
-
-/* BUTTON */
-
-.save-btn{
-background:var(--dark-blue);
-color:white;
-border:none;
-padding:15px 30px;
-border-radius:10px;
-cursor:pointer;
-font-weight:bold;
-width:100%;
-font-size:1rem;
-}
-
-/* BOTTOM NAV */
-
-.bottom-nav{
-position:fixed;
-bottom:0;
-width:100%;
-background:var(--white);
-display:flex;
-justify-content:space-around;
-padding:1rem 0;
-box-shadow:0 -2px 10px rgba(0,0,0,0.1);
-z-index:1000;
-}
-
-.nav-item{
-text-align:center;
-color:var(--dark-blue);
-text-decoration:none;
-font-size:0.8rem;
-}
-
-.nav-item i{
-font-size:1.3rem;
-display:block;
-}
-
-@media(max-width:768px){
-.service-grid,.ads-section{
-grid-template-columns:repeat(2,1fr);
-}
-}
-
-</style>
-</head>
-
-<body>
-
-<div id="mySidebar" class="sidebar">
-<span class="close-btn" onclick="closeNav()">&times;</span>
-
-<a href="#" onclick="showPage('home')"><i class="fas fa-home"></i>Dashboard</a>
-<a href="#"><i class="fas fa-calendar-check"></i>Bookings</a>
-<a href="#"><i class="fas fa-user-md"></i>Appointments</a>
-<a href="#"><i class="fas fa-video"></i>Consultance History</a>
-<a href="#"><i class="fas fa-file-invoice-dollar"></i>My Insurance</a>
-<a href="#"><i class="fas fa-shopping-cart"></i>My Orders</a>
-<a href="#"><i class="fas fa-flask"></i>My Tests</a>
-<a href="#"><i class="fas fa-credit-card"></i>Payments</a>
-<a href="#"><i class="fas fa-bell"></i>Reminders</a>
-<a href="#"><i class="fas fa-qrcode"></i>Medicine Scanner</a>
-<a href="#"><i class="fas fa-question-circle"></i>Help</a>
-<a href="#"><i class="fas fa-cog"></i>Settings</a>
-<a href="#"><i class="fas fa-star"></i>Rate Us</a>
-
-</div>
-
-<header>
-
-<div class="brand-container">
-<h1 class="brand-name">MEDIELEVATE</h1>
-<div class="brand-sub">HEALTHCARE</div>
-</div>
-
-<div class="header-bottom-row">
-
-<div class="user-info" onclick="showPage('profile')">
-
-<i class="fas fa-user-circle fa-2x" style="color:var(--dark-blue)"></i>
-
-<div>
-<strong id="display-name" style="display:block;font-size:0.9rem">John Doe</strong>
-<small style="font-size:0.7rem;color:#666">
-<i class="fas fa-location-dot"></i> Agartala, India
-</small>
-</div>
-
-</div>
-
-<div class="search-bar">
-<i class="fas fa-search"></i>
-<input type="text" placeholder="Search services...">
-</div>
-
-<div class="menu-btn" onclick="openNav()">
-<i class="fas fa-bars"></i>
-</div>
-
-</div>
-
-</header>
-
-<!-- HOME PAGE -->
-
-<div id="home" class="page active-page">
-
-<div class="service-grid">
-
-<div class="service-card"><i class="fas fa-hospital"></i><p>Hospital Booking</p></div>
-<div class="service-card"><i class="fas fa-stethoscope"></i><p>Physical Appt</p></div>
-<div class="service-card"><i class="fas fa-video"></i><p>Video Consult</p></div>
-<div class="service-card"><i class="fas fa-shield-alt"></i><p>Insurance</p></div>
-<div class="service-card"><i class="fas fa-pills"></i><p>Medicines</p></div>
-<div class="service-card"><i class="fas fa-microscope"></i><p>Lab Tests</p></div>
-
-<div class="service-card" style="background:#fee2e2">
-<i class="fas fa-ambulance" style="color:#ef4444"></i>
-<p>Emergency</p>
-</div>
-
-<div class="service-card"><i class="fas fa-heartbeat"></i><p>Health Data</p></div>
-
-</div>
-
-<h3>Special Offers & Services</h3>
-
-<div class="ads-section">
-
-<div class="ad-block"><i class="fas fa-tag"></i>20% OFF<br>Lab Tests</div>
-<div class="ad-block"><i class="fas fa-truck"></i>Free Home<br>Delivery</div>
-<div class="ad-block"><i class="fas fa-heartbeat"></i>Full Body<br>Checkup</div>
-<div class="ad-block"><i class="fas fa-shield-check"></i>Insurance<br>@ ₹499</div>
-
-</div>
-
-<div class="content-section">
-
-<h3>Health Articles</h3>
-
-<div class="article-card">
-<h4>5 Tips for a Healthy Heart</h4>
-<p>Discover the best daily habits to keep your cardiovascular system in top shape...</p>
-</div>
-
-<div class="article-card">
-<h4>Understanding Your Lab Results</h4>
-<p>A simple guide to help you read and understand common medical test reports...</p>
-</div>
-
-</div>
-
-<div class="content-section">
-
-<h3>Frequently Asked Questions</h3>
-
-<div class="faq-item">
-<strong>Are online consultations private?</strong>
-<p style="font-size:0.85rem;color:#666;margin-top:5px">
-Yes, all Medielevate video consultations are end-to-end encrypted for your safety.
-</p>
-</div>
-
-</div>
-
-</div>
-
-<nav class="bottom-nav">
-<a href="#" class="nav-item" onclick="showPage('home')"><i class="fas fa-home"></i>Home</a>
-<a href="#" class="nav-item"><i class="fas fa-file-medical"></i>Health Plans</a>
-<a href="#" class="nav-item"><i class="fas fa-comments"></i>Chat</a>
-</nav>
-
-<script>
-
-function openNav(){
-document.getElementById("mySidebar").style.width="280px";
-}
-
-function closeNav(){
-document.getElementById("mySidebar").style.width="0";
-}
-
-function showPage(pageId){
-document.querySelectorAll(".page").forEach(p=>p.classList.remove("active-page"));
-document.getElementById(pageId).classList.add("active-page");
-window.scrollTo(0,0);
-if(pageId==="home")closeNav();
-}
-
-function saveProfile(){
-const nameInput=document.getElementById("name").value;
-if(nameInput){
-document.getElementById("display-name").innerText=nameInput;
-}
-alert("Medielevate Health Profile Updated!");
-showPage("home");
-}
-
-</script>
-
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>MEDIELEVATE Healthcare</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+
+    <style>
+      :root {
+        --primary: #1e3a8a;
+        --secondary: #3aa1d8;
+        --bg: #f4f8fb;
+        --white: #ffffff;
+        --shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      }
+
+      body {
+        margin: 0;
+        font-family: Segoe UI;
+        background: var(--bg);
+        color: #333;
+      }
+
+      /* HEADER */
+
+      header {
+        background: white;
+        padding: 15px 5%;
+        box-shadow: var(--shadow);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .brand {
+        text-align: center;
+        flex: 1;
+      }
+
+      .brand h1 {
+        margin: 0;
+        font-size: 26px;
+        color: var(--primary);
+        letter-spacing: 2px;
+      }
+
+      .brand span {
+        font-size: 10px;
+        letter-spacing: 5px;
+      }
+
+      .search {
+        display: flex;
+        align-items: center;
+        background: #eef2f7;
+        padding: 6px 12px;
+        border-radius: 20px;
+        margin-top: 10px;
+      }
+
+      .search input {
+        border: none;
+        outline: none;
+        background: none;
+        flex: 1;
+      }
+
+      /* 3 DOT MENU */
+
+      .menu-container {
+        position: relative;
+      }
+
+      .menu-icon {
+        font-size: 20px;
+        cursor: pointer;
+      }
+
+      .dropdown {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 28px;
+        background: white;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        border-radius: 10px;
+        overflow: hidden;
+        width: 160px;
+      }
+
+      .dropdown a {
+        display: block;
+        padding: 10px 15px;
+        text-decoration: none;
+        color: #333;
+        font-size: 14px;
+      }
+
+      .dropdown a:hover {
+        background: #f1f5f9;
+      }
+
+      /* PAGE */
+
+      .page {
+        display: none;
+        max-width: 1100px;
+        margin: 30px auto;
+        padding: 0 15px 120px;
+        animation: fade 0.3s ease;
+      }
+
+      .active {
+        display: block;
+      }
+
+      @keyframes fade {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* SERVICE GRID */
+
+      .service-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .service {
+        background: white;
+        padding: 20px;
+        border-radius: 14px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .service:hover {
+        transform: translateY(-5px);
+        border: 1px solid var(--secondary);
+      }
+
+      .service i {
+        font-size: 22px;
+        color: var(--primary);
+        margin-bottom: 5px;
+      }
+
+      /* OFFERS */
+
+      .offers {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 30px;
+      }
+
+      .offer {
+        background: linear-gradient(135deg, #284a9f, #3aa1d8);
+        color: white;
+        border-radius: 20px;
+        aspect-ratio: 1/1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        box-shadow: var(--shadow);
+        transition: 0.3s;
+        cursor: pointer;
+      }
+
+      .offer:hover {
+        transform: scale(1.05);
+      }
+
+      .offer i {
+        font-size: 28px;
+        margin-bottom: 10px;
+      }
+
+      /* CARD */
+
+      .card {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 12px;
+        box-shadow: var(--shadow);
+      }
+
+      .card h4 {
+        margin: 0 0 5px;
+        color: #1f3f8b;
+      }
+
+      /* HOSPITAL */
+
+      .hospital {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .book-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 6px 15px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      /* DOCTOR */
+
+      .doctor {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .rating {
+        color: #facc15;
+        font-size: 13px;
+      }
+
+      /* EMERGENCY */
+
+      .emergency {
+        border-left: 5px solid red;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        border-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      /* BACK BUTTON */
+
+      .back {
+        background: #555;
+        color: white;
+        border: none;
+        padding: 7px 15px;
+        border-radius: 6px;
+        margin-bottom: 15px;
+        cursor: pointer;
+      }
+
+      /* NAVBAR */
+
+      .bottom {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background: white;
+        display: flex;
+        justify-content: space-around;
+        padding: 12px;
+        box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .bottom a {
+        text-decoration: none;
+        color: var(--primary);
+        font-size: 12px;
+        text-align: center;
+      }
+
+      .bottom i {
+        display: block;
+        font-size: 18px;
+      }
+
+      /* RESPONSIVE */
+
+      @media (max-width: 768px) {
+        .service-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .offers {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      /* MEDICINE PAGE */
+
+      .medicine-search {
+        display: flex;
+        align-items: center;
+        background: #eef2f7;
+        padding: 10px;
+        border-radius: 20px;
+        margin-bottom: 20px;
+      }
+
+      .medicine-search input {
+        border: none;
+        outline: none;
+        background: none;
+        flex: 1;
+        margin-left: 8px;
+      }
+
+      .medicine-categories {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .med-cat {
+        background: white;
+        padding: 15px;
+        text-align: center;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .med-cat:hover {
+        transform: translateY(-4px);
+      }
+
+      .med-cat i {
+        font-size: 20px;
+        color: var(--primary);
+        margin-bottom: 6px;
+      }
+
+      .medicine-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+
+      .med-card {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        text-align: center;
+      }
+
+      .med-card img {
+        width: 70px;
+        margin-bottom: 10px;
+      }
+
+      .med-card h4 {
+        margin: 5px 0;
+        font-size: 14px;
+      }
+
+      .price {
+        color: #1e3a8a;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .cart-btn {
+        background: var(--secondary);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      @media (max-width: 768px) {
+        .medicine-grid {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .medicine-categories {
+          grid-template-columns: repeat(2, 1fr);
+        }
+      }
+      /* IMPROVED HOSPITAL CARDS */
+
+      .hospital-card {
+        background: white;
+        border-radius: 14px;
+        padding: 15px;
+        margin-bottom: 15px;
+        box-shadow: var(--shadow);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: 0.2s;
+      }
+
+      .hospital-card:hover {
+        transform: translateY(-3px);
+        border: 1px solid var(--secondary);
+      }
+
+      .hospital-info {
+        max-width: 70%;
+      }
+
+      .hospital-name {
+        font-weight: 600;
+        color: #1e3a8a;
+        font-size: 16px;
+        margin-bottom: 3px;
+      }
+
+      .hospital-location {
+        font-size: 13px;
+        color: #666;
+        margin-bottom: 6px;
+      }
+
+      .hospital-meta {
+        display: flex;
+        gap: 15px;
+        font-size: 12px;
+        color: #555;
+        margin-bottom: 6px;
+      }
+
+      .hospital-rating {
+        color: #facc15;
+        font-size: 13px;
+      }
+
+      .review {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .hospital-actions {
+        text-align: right;
+      }
+
+      .distance {
+        font-size: 12px;
+        margin-bottom: 8px;
+        color: #444;
+      }
+
+      .book-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 7px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .book-btn:hover {
+        background: #0f2a6b;
+      }
+      /* DOCTOR PAGE IMPROVEMENT */
+
+      .doctor-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        margin-bottom: 15px;
+        box-shadow: var(--shadow);
+        transition: 0.2s;
+      }
+
+      .doctor-card:hover {
+        transform: translateY(-3px);
+        border: 1px solid var(--secondary);
+      }
+
+      .doc-left {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .doc-img {
+        width: 55px;
+        height: 55px;
+        border-radius: 50%;
+        background: #e6eef7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 24px;
+        color: var(--primary);
+      }
+
+      .doc-name {
+        font-weight: 600;
+        color: #1e3a8a;
+      }
+
+      .doc-spec {
+        font-size: 13px;
+        color: #666;
+      }
+
+      .doc-meta {
+        font-size: 12px;
+        color: #555;
+        margin-top: 3px;
+      }
+
+      .doc-rating {
+        color: #facc15;
+        font-size: 13px;
+      }
+
+      .doc-fee {
+        font-size: 12px;
+        margin-top: 3px;
+        color: #333;
+      }
+
+      .doc-right {
+        text-align: right;
+      }
+
+      .slot {
+        display: inline-block;
+        border: 1px solid #ccc;
+        padding: 4px 8px;
+        border-radius: 6px;
+        font-size: 11px;
+        margin: 2px;
+        cursor: pointer;
+      }
+
+      .slot:hover {
+        background: var(--secondary);
+        color: white;
+        border: none;
+      }
+
+      .book-doc {
+        margin-top: 5px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .filter-bar {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .filter {
+        padding: 6px 12px;
+        background: white;
+        border-radius: 20px;
+        border: 1px solid #ddd;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .filter:hover {
+        background: var(--secondary);
+        color: white;
+      }
+      /* VIDEO CONSULT PAGE */
+
+      .video-banner {
+        background: linear-gradient(135deg, #284a9f, #3aa1d8);
+        color: white;
+        padding: 20px;
+        border-radius: 14px;
+        margin-bottom: 20px;
+        text-align: center;
+      }
+
+      .video-banner h3 {
+        margin: 0;
+      }
+
+      .video-banner p {
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .specialties {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+        margin-bottom: 25px;
+      }
+
+      .specialty {
+        background: white;
+        padding: 12px;
+        border-radius: 10px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .specialty:hover {
+        transform: translateY(-3px);
+        border: 1px solid var(--secondary);
+      }
+
+      .specialty i {
+        font-size: 18px;
+        color: var(--primary);
+        margin-bottom: 5px;
+      }
+
+      .video-doctor {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        margin-bottom: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: var(--shadow);
+      }
+
+      .video-left {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+      }
+
+      .video-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #e6eef7;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 22px;
+        color: var(--primary);
+      }
+
+      .video-name {
+        font-weight: 600;
+        color: #1e3a8a;
+      }
+
+      .video-meta {
+        font-size: 12px;
+        color: #555;
+      }
+
+      .video-right {
+        text-align: right;
+      }
+
+      .wait {
+        font-size: 12px;
+        margin-bottom: 6px;
+      }
+
+      .video-btn {
+        background: #10b981;
+        color: white;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .video-btn:hover {
+        background: #059669;
+      }
+      /* INSURANCE PAGE */
+
+      .insurance-banner {
+        background: linear-gradient(135deg, #284a9f, #3aa1d8);
+        color: white;
+        padding: 25px;
+        border-radius: 16px;
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .insurance-banner h2 {
+        margin: 0;
+      }
+
+      .insurance-banner p {
+        font-size: 14px;
+        margin-top: 5px;
+        opacity: 0.9;
+      }
+
+      .plan-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-top: 20px;
+      }
+
+      .plan-card {
+        background: white;
+        border-radius: 14px;
+        padding: 20px;
+        box-shadow: var(--shadow);
+        transition: 0.25s;
+        position: relative;
+      }
+
+      .plan-card:hover {
+        transform: translateY(-5px);
+        border: 1px solid var(--secondary);
+      }
+
+      .plan-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: #1e3a8a;
+        margin-bottom: 6px;
+      }
+
+      .plan-price {
+        font-size: 22px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+
+      .plan-features {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 15px;
+      }
+
+      .plan-features li {
+        margin-bottom: 6px;
+      }
+
+      .buy-btn {
+        background: #10b981;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+      }
+
+      .buy-btn:hover {
+        background: #059669;
+      }
+
+      /* TRUST SECTION */
+
+      .trust {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+      }
+
+      .trust-box {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        width: 160px;
+      }
+
+      .trust-box i {
+        font-size: 22px;
+        color: var(--primary);
+        margin-bottom: 6px;
+      }
+
+      /* MOBILE */
+
+      @media (max-width: 768px) {
+        .plan-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* LAB TEST PAGE */
+
+      .lab-banner {
+        background: linear-gradient(135deg, #3aa1d8, #1e3a8a);
+        color: white;
+        padding: 25px;
+        border-radius: 16px;
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .lab-banner h2 {
+        margin: 0;
+      }
+
+      .lab-banner p {
+        font-size: 14px;
+        margin-top: 5px;
+      }
+
+      .package-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 25px;
+      }
+
+      .package-card {
+        background: white;
+        padding: 18px;
+        border-radius: 14px;
+        box-shadow: var(--shadow);
+        transition: 0.25s;
+      }
+
+      .package-card:hover {
+        transform: translateY(-5px);
+        border: 1px solid var(--secondary);
+      }
+
+      .package-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #1e3a8a;
+        margin-bottom: 6px;
+      }
+
+      .package-price {
+        font-size: 20px;
+        font-weight: bold;
+        margin-bottom: 8px;
+      }
+
+      .package-info {
+        font-size: 13px;
+        color: #555;
+        margin-bottom: 12px;
+      }
+
+      .test-list {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: var(--shadow);
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .test-name {
+        font-weight: 600;
+        color: #1e3a8a;
+      }
+
+      .test-meta {
+        font-size: 12px;
+        color: #666;
+      }
+
+      .book-test {
+        background: #10b981;
+        color: white;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 12px;
+      }
+
+      .book-test:hover {
+        background: #059669;
+      }
+
+      @media (max-width: 768px) {
+        .package-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* EMERGENCY PAGE */
+
+      .emergency-banner {
+        background: linear-gradient(135deg, #ef4444, #b91c1c);
+        color: white;
+        padding: 25px;
+        border-radius: 16px;
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .emergency-banner h2 {
+        margin: 0;
+        font-size: 24px;
+      }
+
+      .emergency-banner p {
+        font-size: 14px;
+        opacity: 0.9;
+        margin-top: 5px;
+      }
+
+      .emergency-actions {
+        display: flex;
+        gap: 15px;
+        flex-wrap: wrap;
+        margin-bottom: 25px;
+      }
+
+      .emergency-btn {
+        flex: 1;
+        background: white;
+        border-radius: 14px;
+        padding: 18px;
+        text-align: center;
+        box-shadow: var(--shadow);
+        cursor: pointer;
+        transition: 0.25s;
+      }
+
+      .emergency-btn:hover {
+        transform: translateY(-4px);
+      }
+
+      .emergency-btn i {
+        font-size: 26px;
+        color: #ef4444;
+        margin-bottom: 8px;
+      }
+
+      .emergency-btn h4 {
+        margin: 5px 0;
+      }
+
+      .hospital-emergency {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .hospital-info {
+        font-size: 13px;
+      }
+
+      .emergency-call {
+        background: #ef4444;
+        color: white;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .first-aid-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-top: 20px;
+      }
+
+      .first-aid-card {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        font-size: 13px;
+      }
+
+      .first-aid-card i {
+        font-size: 20px;
+        color: #ef4444;
+        margin-bottom: 6px;
+      }
+
+      @media (max-width: 768px) {
+        .first-aid-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* HEALTH DATA PAGE */
+
+      .health-banner {
+        background: linear-gradient(135deg, #10b981, #3aa1d8);
+        color: white;
+        padding: 25px;
+        border-radius: 16px;
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .health-banner h2 {
+        margin: 0;
+      }
+
+      .health-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 25px;
+      }
+
+      .health-card {
+        background: white;
+        border-radius: 14px;
+        padding: 18px;
+        box-shadow: var(--shadow);
+        transition: 0.25s;
+      }
+
+      .health-card:hover {
+        transform: translateY(-5px);
+      }
+
+      .health-card i {
+        font-size: 22px;
+        color: var(--primary);
+        margin-bottom: 8px;
+      }
+
+      .health-card h4 {
+        margin: 5px 0;
+      }
+
+      .record-list {
+        background: white;
+        border-radius: 12px;
+        padding: 15px;
+        box-shadow: var(--shadow);
+        margin-bottom: 12px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .record-info {
+        font-size: 13px;
+      }
+
+      .view-btn {
+        background: var(--primary);
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+      }
+
+      .upload-box {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .upload-box input {
+        margin-top: 10px;
+      }
+
+      @media (max-width: 768px) {
+        .health-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      /* HEALTH ARTICLES */
+
+      .articles {
+        margin-top: 30px;
+      }
+
+      .article-search {
+        width: 100%;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        margin-bottom: 15px;
+      }
+
+      .featured-article {
+        background: linear-gradient(135deg, #3aa1d8, #284a9f);
+        color: white;
+        padding: 20px;
+        border-radius: 14px;
+        margin-bottom: 20px;
+      }
+
+      .read-btn {
+        background: #10b981;
+        color: white;
+        border: none;
+        padding: 6px 14px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 8px;
+      }
+
+      .article-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+      }
+
+      .article-card {
+        background: white;
+        padding: 15px;
+        border-radius: 12px;
+        box-shadow: var(--shadow);
+        transition: 0.25s;
+      }
+
+      .article-card:hover {
+        transform: translateY(-4px);
+      }
+      .trending {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin-bottom: 15px;
+      }
+
+      .trending span {
+        background: #e8f1ff;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .dark-mode .trending span {
+        background: #2a2a2a;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div class="topbar">
+        <div style="width: 30px"></div>
+
+        <div class="brand">
+          <h1>MEDIELEVATE</h1>
+          <span>HEALTHCARE</span>
+        </div>
+
+        <div class="menu-container">
+          <i class="fa fa-ellipsis-v menu-icon" onclick="toggleMenu()"></i>
+
+          <div id="menu" class="dropdown">
+            <a href="#">Profile</a>
+            <a href="#">Settings</a>
+            <a href="#">Notifications</a>
+            <a href="#">Help</a>
+            <a href="#">Logout</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="search">
+        <i class="fa fa-search"></i>
+        <input placeholder="Search doctors, hospitals..." />
+      </div>
+    </header>
+
+    <!-- HOME -->
+
+    <div id="home" class="page active">
+      <div class="service-grid">
+        <div class="service" onclick="show('hospital')">
+          <i class="fa fa-hospital"></i>
+          <p>Hospital Booking</p>
+        </div>
+
+        <div class="service" onclick="show('appointment')">
+          <i class="fa fa-user-md"></i>
+          <p>Appointments</p>
+        </div>
+
+        <div class="service" onclick="show('video')">
+          <i class="fa fa-video"></i>
+          <p>Video Consult</p>
+        </div>
+
+        <div class="service" onclick="show('insurance')">
+          <i class="fa fa-shield"></i>
+          <p>Insurance</p>
+        </div>
+
+        <div class="service" onclick="show('medicine')">
+          <i class="fa fa-pills"></i>
+          <p>Medicines</p>
+        </div>
+
+        <div class="service" onclick="show('lab')">
+          <i class="fa fa-microscope"></i>
+          <p>Lab Tests</p>
+        </div>
+
+        <div class="service" onclick="show('emergency')">
+          <i class="fa fa-ambulance"></i>
+          <p>Emergency</p>
+        </div>
+
+        <div class="service" onclick="show('health')">
+          <i class="fa fa-heartbeat"></i>
+          <p>Health Data</p>
+        </div>
+      </div>
+
+      <h3>Special Offers & Services</h3>
+
+      <div class="offers">
+        <div class="offer">
+          <i class="fa fa-tag"></i>
+          20% OFF<br />Lab Tests
+        </div>
+
+        <div class="offer">
+          <i class="fa fa-truck"></i>
+          Free Home<br />Delivery
+        </div>
+
+        <div class="offer">
+          <i class="fa fa-heart-pulse"></i>
+          Full Body<br />Checkup
+        </div>
+
+        <div class="offer">
+          <i class="fa fa-shield"></i>
+          Insurance<br />@ ₹499
+        </div>
+      </div>
+
+      <h3>Trending Topics</h3>
+      <div class="trending">
+        <span>Immunity Boosting</span>
+        <span>Weight Loss</span>
+        <span>Heart Health</span>
+        <span>Mental Wellness</span>
+        <span>Diabetes Care</span>
+      </div>
+
+      <h3>Health Articles</h3>
+
+      <div class="card">
+        <!-- HEALTH ARTICLES SECTION -->
+
+        <div class="articles">
+          <h2>Health Articles</h2>
+
+          <input class="article-search" placeholder="Search health topics..." />
+
+          <div class="featured-article">
+            <h3>How to Maintain a Healthy Lifestyle</h3>
+
+            <p>
+              Simple daily habits like balanced diet, exercise and sleep can
+              dramatically improve your long-term health.
+            </p>
+
+            <button class="read-btn">Read More</button>
+          </div>
+          <h3>Trending Topics</h3>
+
+          <div class="article-grid">
+            <div class="article-card">
+              <h4>Benefits of Regular Exercise</h4>
+
+              <p>
+                Exercise improves heart health, strengthens muscles and boosts
+                mood.
+              </p>
+
+              <span>⏱ 5 min read</span>
+
+              <button class="read-btn">Read</button>
+            </div>
+
+            <div class="article-card">
+              <h4>Healthy Diet Tips</h4>
+
+              <p>
+                Learn how balanced nutrition helps maintain energy and immunity.
+              </p>
+
+              <span>⏱ 4 min read</span>
+
+              <button class="read-btn">Read</button>
+            </div>
+
+            <div class="article-card">
+              <h4>Mental Health Awareness</h4>
+
+              <p>
+                Understanding mental health is the first step toward better
+                wellbeing.
+              </p>
+
+              <span>⏱ 6 min read</span>
+
+              <button class="read-btn">Read</button>
+            </div>
+
+            <div class="article-card">
+              <h4>Importance of Sleep</h4>
+
+              <p>Good sleep improves brain function, mood and immune system.</p>
+
+              <span>⏱ 3 min read</span>
+
+              <button class="read-btn">Read</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h4>Understanding Your Lab Results</h4>
+        <p>A guide to reading medical reports easily.</p>
+      </div>
+    </div>
+
+    <!-- HOSPITAL PAGE -->
+
+    <div id="hospital" class="page">
+      <button class="back" onclick="show('home')">Back</button>
+
+      <h2>Hospital Booking</h2>
+
+      <div class="hospital-card">
+        <div class="hospital-info">
+          <div class="hospital-name">IGM Hospital</div>
+
+          <div class="hospital-location">Agartala, Tripura</div>
+
+          <div class="hospital-meta">
+            <span class="hospital-rating">★★★★★ 4.6</span>
+            <span>312 reviews</span>
+          </div>
+
+          <div class="review">"Quick service and good emergency care."</div>
+        </div>
+
+        <div class="hospital-actions">
+          <div class="distance">1.2 km away</div>
+
+          <button class="book-btn">Book</button>
+        </div>
+      </div>
+
+      <div class="hospital-card">
+        <div class="hospital-info">
+          <div class="hospital-name">District Hospital</div>
+
+          <div class="hospital-location">Belonia, South Tripura</div>
+
+          <div class="hospital-meta">
+            <span class="hospital-rating">★★★★☆ 4.3</span>
+            <span>198 reviews</span>
+          </div>
+
+          <div class="review">
+            "Affordable treatment and experienced doctors."
+          </div>
+        </div>
+
+        <div class="hospital-actions">
+          <div class="distance">3.8 km away</div>
+
+          <button class="book-btn">Book</button>
+        </div>
+      </div>
+
+      <div class="hospital-card">
+        <div class="hospital-info">
+          <div class="hospital-name">Unakoti District Hospital</div>
+
+          <div class="hospital-location">Kailashahar</div>
+
+          <div class="hospital-meta">
+            <span class="hospital-rating">★★★★☆ 4.2</span>
+            <span>156 reviews</span>
+          </div>
+
+          <div class="review">"Clean facility with helpful staff."</div>
+        </div>
+
+        <div class="hospital-actions">
+          <div class="distance">5.1 km away</div>
+
+          <button class="book-btn">Book</button>
+        </div>
+      </div>
+
+      <div class="hospital-card">
+        <div class="hospital-info">
+          <div class="hospital-name">
+            Agartala Government Medical College Hospital
+          </div>
+
+          <div class="hospital-location">Agartala</div>
+
+          <div class="hospital-meta">
+            <span class="hospital-rating">★★★★★ 4.7</span>
+            <span>510 reviews</span>
+          </div>
+
+          <div class="review">
+            "Highly qualified doctors and advanced facilities."
+          </div>
+        </div>
+
+        <div class="hospital-actions">
+          <div class="distance">2.4 km away</div>
+
+          <button class="book-btn">Book</button>
+        </div>
+      </div>
+
+      <div class="hospital-card">
+        <div class="hospital-info">
+          <div class="hospital-name">Tripura Medical College Hospital</div>
+
+          <div class="hospital-location">Hapania, Agartala</div>
+
+          <div class="hospital-meta">
+            <span class="hospital-rating">★★★★☆ 4.4</span>
+            <span>289 reviews</span>
+          </div>
+
+          <div class="review">"Good infrastructure and fast OPD service."</div>
+        </div>
+
+        <div class="hospital-actions">
+          <div class="distance">4.6 km away</div>
+
+          <button class="book-btn">Book</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- APPOINTMENT PAGE -->
+
+    <div id="appointment" class="page">
+      <button class="back" onclick="show('home')">Back</button>
+
+      <h2>Doctor Appointment</h2>
+
+      <div class="filter-bar">
+        <div class="filter">All</div>
+        <div class="filter">General Physician</div>
+        <div class="filter">Pediatrician</div>
+        <div class="filter">Orthopedic</div>
+      </div>
+
+      <!-- DOCTOR 1 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Sharma</div>
+
+            <div class="doc-spec">General Physician</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★★ 4.8</span>
+              • 420 reviews
+            </div>
+
+            <div class="doc-meta">12 years experience • 1.5 km away</div>
+
+            <div class="doc-fee">Consultation ₹400</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">10:30</span>
+            <span class="slot">11:15</span>
+            <span class="slot">12:00</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+
+      <!-- DOCTOR 2 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Chatterjee</div>
+
+            <div class="doc-spec">Orthopedic</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★☆ 4.5</span>
+              • 280 reviews
+            </div>
+
+            <div class="doc-meta">10 years experience • 2.8 km away</div>
+
+            <div class="doc-fee">Consultation ₹500</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">1:00</span>
+            <span class="slot">1:45</span>
+            <span class="slot">2:30</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+
+      <!-- DOCTOR 3 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Iyer</div>
+
+            <div class="doc-spec">Pediatrician</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★★ 4.9</span>
+              • 510 reviews
+            </div>
+
+            <div class="doc-meta">15 years experience • 3 km away</div>
+
+            <div class="doc-fee">Consultation ₹450</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">3:00</span>
+            <span class="slot">3:30</span>
+            <span class="slot">4:15</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+      <!-- DOCTOR 4 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Mehta</div>
+
+            <div class="doc-spec">Cardiologist</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★★ 4.7</span>
+              • 365 reviews
+            </div>
+
+            <div class="doc-meta">14 years experience • 2.1 km away</div>
+
+            <div class="doc-fee">Consultation ₹650</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">9:30</span>
+            <span class="slot">10:15</span>
+            <span class="slot">11:00</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+
+      <!-- DOCTOR 5 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Das</div>
+
+            <div class="doc-spec">Dermatologist</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★☆ 4.4</span>
+              • 190 reviews
+            </div>
+
+            <div class="doc-meta">9 years experience • 3.2 km away</div>
+
+            <div class="doc-fee">Consultation ₹500</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">12:30</span>
+            <span class="slot">1:15</span>
+            <span class="slot">2:00</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+
+      <!-- DOCTOR 6 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Kapoor</div>
+
+            <div class="doc-spec">Neurologist</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★★ 4.9</span>
+              • 420 reviews
+            </div>
+
+            <div class="doc-meta">16 years experience • 4.1 km away</div>
+
+            <div class="doc-fee">Consultation ₹800</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">2:45</span>
+            <span class="slot">3:30</span>
+            <span class="slot">4:15</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+
+      <!-- DOCTOR 7 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Banerjee</div>
+
+            <div class="doc-spec">ENT Specialist</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★☆ 4.3</span>
+              • 150 reviews
+            </div>
+
+            <div class="doc-meta">8 years experience • 2.7 km away</div>
+
+            <div class="doc-fee">Consultation ₹450</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">10:45</span>
+            <span class="slot">11:30</span>
+            <span class="slot">12:15</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+
+      <!-- DOCTOR 8 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Patel</div>
+
+            <div class="doc-spec">Gynecologist</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★★ 4.8</span>
+              • 305 reviews
+            </div>
+
+            <div class="doc-meta">13 years experience • 3.5 km away</div>
+
+            <div class="doc-fee">Consultation ₹600</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">4:45</span>
+            <span class="slot">5:30</span>
+            <span class="slot">6:15</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+
+      <!-- DOCTOR 9 -->
+
+      <div class="doctor-card">
+        <div class="doc-left">
+          <div class="doc-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="doc-name">Dr. Reddy</div>
+
+            <div class="doc-spec">Psychiatrist</div>
+
+            <div class="doc-meta">
+              <span class="doc-rating">★★★★☆ 4.6</span>
+              • 210 reviews
+            </div>
+
+            <div class="doc-meta">11 years experience • 5 km away</div>
+
+            <div class="doc-fee">Consultation ₹700</div>
+          </div>
+        </div>
+
+        <div class="doc-right">
+          <div>
+            <span class="slot">6:30</span>
+            <span class="slot">7:15</span>
+            <span class="slot">8:00</span>
+          </div>
+
+          <button class="book-doc">Book</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIDEO CONSULT PAGE -->
+
+    <div id="video" class="page">
+      <button class="back" onclick="show('home')">Back</button>
+
+      <h2>Video Consultation</h2>
+
+      <div class="video-banner">
+        <h3>Talk to a Doctor Online</h3>
+
+        <p>Connect with certified doctors in under 10 minutes</p>
+      </div>
+
+      <h3>Specializations</h3>
+
+      <div class="specialties">
+        <div class="specialty">
+          <i class="fa fa-user-md"></i>
+          <p>General</p>
+        </div>
+
+        <div class="specialty">
+          <i class="fa fa-heartbeat"></i>
+          <p>Cardiology</p>
+        </div>
+
+        <div class="specialty">
+          <i class="fa fa-child"></i>
+          <p>Pediatric</p>
+        </div>
+
+        <div class="specialty">
+          <i class="fa fa-brain"></i>
+          <p>Mental Health</p>
+        </div>
+      </div>
+
+      <h3>Available for Video Consult</h3>
+
+      <!-- DOCTOR -->
+
+      <div class="video-doctor">
+        <div class="video-left">
+          <div class="video-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="video-name">Dr. Sharma</div>
+
+            <div class="video-meta">General Physician</div>
+
+            <div class="video-meta">★★★★★ 4.8 • 10 yrs exp</div>
+          </div>
+        </div>
+
+        <div class="video-right">
+          <div class="wait">Wait Time ~ 8 mins</div>
+
+          <button class="video-btn"><i class="fa fa-video"></i> Start</button>
+        </div>
+      </div>
+
+      <div class="video-doctor">
+        <div class="video-left">
+          <div class="video-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="video-name">Dr. Patel</div>
+
+            <div class="video-meta">Gynecologist</div>
+
+            <div class="video-meta">★★★★★ 4.7 • 12 yrs exp</div>
+          </div>
+        </div>
+
+        <div class="video-right">
+          <div class="wait">Wait Time ~ 12 mins</div>
+
+          <button class="video-btn"><i class="fa fa-video"></i> Start</button>
+        </div>
+      </div>
+
+      <div class="video-doctor">
+        <div class="video-left">
+          <div class="video-img">
+            <i class="fa fa-user-md"></i>
+          </div>
+
+          <div>
+            <div class="video-name">Dr. Kapoor</div>
+
+            <div class="video-meta">Neurologist</div>
+
+            <div class="video-meta">★★★★☆ 4.6 • 15 yrs exp</div>
+          </div>
+        </div>
+
+        <div class="video-right">
+          <div class="wait">Wait Time ~ 5 mins</div>
+
+          <button class="video-btn"><i class="fa fa-video"></i> Start</button>
+        </div>
+      </div>
+    </div>
+    <!-- INSURANCE PAGE -->
+
+    <div id="insurance" class="page">
+      <button class="back" onclick="show('home')">Back</button>
+
+      <div class="insurance-banner">
+        <h2>Health Insurance Plans</h2>
+
+        <p>Protect your health and finances with affordable coverage</p>
+      </div>
+
+      <h3>Popular Plans</h3>
+
+      <div class="plan-grid">
+        <!-- PLAN 1 -->
+
+        <div class="plan-card">
+          <div class="plan-title">Basic Care</div>
+
+          <div class="plan-price">₹499 / year</div>
+
+          <ul class="plan-features">
+            <li>Coverage up to ₹1 Lakh</li>
+            <li>Free annual health checkup</li>
+            <li>24/7 doctor consultation</li>
+            <li>Cashless hospital support</li>
+          </ul>
+
+          <button class="buy-btn">Buy Plan</button>
+        </div>
+
+        <!-- PLAN 2 -->
+
+        <div class="plan-card">
+          <div class="plan-title">Family Protect</div>
+
+          <div class="plan-price">₹1299 / year</div>
+
+          <ul class="plan-features">
+            <li>Coverage up to ₹5 Lakhs</li>
+            <li>Family coverage (4 members)</li>
+            <li>Free lab tests</li>
+            <li>Video consultation included</li>
+          </ul>
+
+          <button class="buy-btn">Buy Plan</button>
+        </div>
+
+        <!-- PLAN 3 -->
+
+        <div class="plan-card">
+          <div class="plan-title">Premium Shield</div>
+
+          <div class="plan-price">₹2499 / year</div>
+
+          <ul class="plan-features">
+            <li>Coverage up to ₹10 Lakhs</li>
+            <li>Unlimited doctor consults</li>
+            <li>Priority hospital booking</li>
+            <li>Free medicines delivery</li>
+          </ul>
+
+          <button class="buy-btn">Buy Plan</button>
+        </div>
+      </div>
+
+      <h3>Why Choose MEDIELEVATE Insurance</h3>
+
+      <div class="trust">
+        <div class="trust-box">
+          <i class="fa fa-hospital"></i>
+
+          <p>100+ Partner Hospitals</p>
+        </div>
+
+        <div class="trust-box">
+          <i class="fa fa-user-md"></i>
+
+          <p>Verified Doctors</p>
+        </div>
+
+        <div class="trust-box">
+          <i class="fa fa-shield-alt"></i>
+
+          <p>Secure Coverage</p>
+        </div>
+
+        <div class="trust-box">
+          <i class="fa fa-headset"></i>
+
+          <p>24/7 Support</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- MEDICINE PAGE -->
+
+    <div id="medicine" class="page">
+      <button class="back" onclick="show('home')">Back</button>
+
+      <h2>Order Medicines</h2>
+
+      <div class="medicine-search">
+        <i class="fa fa-search"></i>
+        <input placeholder="Search medicines, health products..." />
+      </div>
+
+      <h3>Categories</h3>
+
+      <div class="medicine-categories">
+        <div class="med-cat">
+          <i class="fa fa-capsules"></i>
+          <p>Tablets</p>
+        </div>
+
+        <div class="med-cat">
+          <i class="fa fa-syringe"></i>
+          <p>Injections</p>
+        </div>
+
+        <div class="med-cat">
+          <i class="fa fa-band-aid"></i>
+          <p>First Aid</p>
+        </div>
+
+        <div class="med-cat">
+          <i class="fa fa-heart"></i>
+          <p>Health Care</p>
+        </div>
+      </div>
+
+      <h3>Popular Medicines</h3>
+
+      <div class="medicine-grid">
+        <div class="med-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png" />
+          <h4>Paracetamol 500mg</h4>
+          <div class="price">₹25</div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+
+        <div class="med-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png" />
+          <h4>Vitamin C Tablets</h4>
+          <div class="price">₹120</div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+
+        <div class="med-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png" />
+          <h4>Cough Syrup</h4>
+          <div class="price">₹90</div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+
+        <div class="med-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png" />
+          <h4>Ibuprofen</h4>
+          <div class="price">₹45</div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+
+        <div class="med-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png" />
+          <h4>Antacid Gel</h4>
+          <div class="price">₹75</div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+
+        <div class="med-card">
+          <img src="https://cdn-icons-png.flaticon.com/512/4320/4320371.png" />
+          <h4>ORS Pack</h4>
+          <div class="price">₹35</div>
+          <button class="cart-btn">Add to Cart</button>
+        </div>
+      </div>
+    </div>
+    <!-- LAB TEST PAGE -->
+
+    <div id="lab" class="page">
+      <button class="back" onclick="show('home')">Back</button>
+
+      <div class="lab-banner">
+        <h2>Book Lab Tests</h2>
+
+        <p>Home sample collection available • Trusted diagnostic labs</p>
+      </div>
+
+      <h3>Popular Health Packages</h3>
+
+      <div class="package-grid">
+        <div class="package-card">
+          <div class="package-title">Full Body Checkup</div>
+
+          <div class="package-price">₹1499</div>
+
+          <div class="package-info">
+            Includes 60+ tests • Blood • Liver • Kidney • Cholesterol
+          </div>
+
+          <button class="book-test">Book Now</button>
+        </div>
+
+        <div class="package-card">
+          <div class="package-title">Diabetes Screening</div>
+
+          <div class="package-price">₹599</div>
+
+          <div class="package-info">Blood sugar • HbA1c • Fasting glucose</div>
+
+          <button class="book-test">Book Now</button>
+        </div>
+
+        <div class="package-card">
+          <div class="package-title">Heart Health Package</div>
+
+          <div class="package-price">₹999</div>
+
+          <div class="package-info">Cholesterol • ECG • Lipid profile</div>
+
+          <button class="book-test">Book Now</button>
+        </div>
+      </div>
+
+      <h3>Individual Lab Tests</h3>
+
+      <div class="test-list">
+        <div>
+          <div class="test-name">Complete Blood Count (CBC)</div>
+
+          <div class="test-meta">Reports in 24 hours</div>
+        </div>
+
+        <button class="book-test">₹299</button>
+      </div>
+
+      <div class="test-list">
+        <div>
+          <div class="test-name">Thyroid Profile Test</div>
+
+          <div class="test-meta">Reports in 24 hours</div>
+        </div>
+
+        <button class="book-test">₹399</button>
+      </div>
+
+      <div class="test-list">
+        <div>
+          <div class="test-name">Vitamin D Test</div>
+
+          <div class="test-meta">Reports in 24 hours</div>
+        </div>
+
+        <button class="book-test">₹799</button>
+      </div>
+
+      <div class="test-list">
+        <div>
+          <div class="test-name">COVID-19 RT PCR</div>
+
+          <div class="test-meta">Reports in 12 hours</div>
+        </div>
+
+        <button class="book-test">₹650</button>
+      </div>
+
+      <div class="test-list">
+        <div>
+          <div class="test-name">Liver Function Test</div>
+
+          <div class="test-meta">Reports in 24 hours</div>
+        </div>
+
+        <button class="book-test">₹550</button>
+      </div>
+    </div>
+
+    <!-- EMERGENCY PAGE -->
+
+    <div id="emergency" class="page">
+      <button class="back" onclick="show('home')">Back</button>
+
+      <div class="emergency-banner">
+        <h2>Emergency Help</h2>
+
+        <p>Immediate assistance when you need it most</p>
+      </div>
+
+      <div class="emergency-actions">
+        <div class="emergency-btn">
+          <i class="fa fa-ambulance"></i>
+
+          <h4>Call Ambulance</h4>
+
+          <p>Immediate ambulance dispatch</p>
+        </div>
+
+        <div class="emergency-btn">
+          <i class="fa fa-user-md"></i>
+
+          <h4>Emergency Doctor</h4>
+
+          <p>Talk to a doctor instantly</p>
+        </div>
+
+        <div class="emergency-btn">
+          <i class="fa fa-phone"></i>
+
+          <h4>Emergency Hotline</h4>
+
+          <p>24/7 emergency support</p>
+        </div>
+      </div>
+
+      <h3>Nearby Emergency Hospitals</h3>
+
+      <div class="hospital-emergency">
+        <div class="hospital-info">
+          <strong>IGM Hospital</strong><br />
+          Rating ⭐ 4.2 • 2.1 km away<br />
+          24/7 Emergency
+        </div>
+
+        <button class="emergency-call">Call</button>
+      </div>
+
+      <div class="hospital-emergency">
+        <div class="hospital-info">
+          <strong>Unakoti District Hospital</strong><br />
+          Rating ⭐ 4.1 • 3.5 km away<br />
+          Emergency & Trauma Care
+        </div>
+
+        <button class="emergency-call">Call</button>
+      </div>
+
+      <div class="hospital-emergency">
+        <div class="hospital-info">
+          <strong>District Hospital Belonia</strong><br />
+          Rating ⭐ 4.0 • 4.8 km away<br />
+          24/7 Emergency
+        </div>
+
+        <button class="emergency-call">Call</button>
+      </div>
+
+      <h3>Quick First Aid Guides</h3>
+
+      <div class="first-aid-grid">
+        <div class="first-aid-card">
+          <i class="fa fa-heartbeat"></i>
+
+          <b>Heart Attack</b>
+
+          <p>Call emergency services immediately and keep patient calm.</p>
+        </div>
+
+        <div class="first-aid-card">
+          <i class="fa fa-burn"></i>
+
+          <b>Burn Injury</b>
+
+          <p>Cool the burn under running water for 10 minutes.</p>
+        </div>
+
+        <div class="first-aid-card">
+          <i class="fa fa-band-aid"></i>
+
+          <b>Bleeding</b>
+
+          <p>Apply firm pressure with clean cloth to stop bleeding.</p>
+        </div>
+
+        <div class="first-aid-card">
+          <i class="fa fa-lungs"></i>
+
+          <b>Breathing Problem</b>
+
+          <p>Help patient sit upright and loosen tight clothing.</p>
+        </div>
+
+        <div class="first-aid-card">
+          <i class="fa fa-brain"></i>
+
+          <b>Stroke</b>
+
+          <p>Look for facial drooping and call emergency help quickly.</p>
+        </div>
+
+        <div class="first-aid-card">
+          <i class="fa fa-head-side-cough"></i>
+
+          <b>Choking</b>
+
+          <p>Perform Heimlich maneuver if person cannot breathe.</p>
+        </div>
+      </div>
+    </div>
+    <!-- HEALTH DATA PAGE -->
+
+    <div id="health" class="page">
+      <button class="back" onclick="show('home')">Back</button>
+
+      <div class="health-banner">
+        <h2>Your Health Records</h2>
+
+        <p>Securely store and access all your medical data</p>
+      </div>
+
+      <h3>Health Records</h3>
+
+      <div class="health-grid">
+        <div class="health-card">
+          <i class="fa fa-file-medical"></i>
+
+          <h4>Prescriptions</h4>
+
+          <p>View doctor prescribed medicines</p>
+        </div>
+
+        <div class="health-card">
+          <i class="fa fa-vials"></i>
+
+          <h4>Lab Reports</h4>
+
+          <p>Access diagnostic reports</p>
+        </div>
+
+        <div class="health-card">
+          <i class="fa fa-heartbeat"></i>
+
+          <h4>Health Reports</h4>
+
+          <p>Overall health summaries</p>
+        </div>
+
+        <div class="health-card">
+          <i class="fa fa-syringe"></i>
+
+          <h4>Vaccination</h4>
+
+          <p>Track vaccine history</p>
+        </div>
+
+        <div class="health-card">
+          <i class="fa fa-user"></i>
+
+          <h4>Patient Profile</h4>
+
+          <p>Medical information & allergies</p>
+        </div>
+
+        <div class="health-card">
+          <i class="fa fa-file-upload"></i>
+
+          <h4>Upload Records</h4>
+
+          <p>Add new medical documents</p>
+        </div>
+      </div>
+
+      <h3>Recent Records</h3>
+
+      <div class="record-list">
+        <div class="record-info">
+          <b>Prescription - Dr. Sharma</b><br />
+          12 March 2026
+        </div>
+
+        <button class="view-btn">View</button>
+      </div>
+
+      <div class="record-list">
+        <div class="record-info">
+          <b>CBC Lab Report</b><br />
+          8 March 2026
+        </div>
+
+        <button class="view-btn">Download</button>
+      </div>
+
+      <div class="record-list">
+        <div class="record-info">
+          <b>Full Body Checkup Report</b><br />
+          1 March 2026
+        </div>
+
+        <button class="view-btn">View</button>
+      </div>
+
+      <h3>Upload New Medical Record</h3>
+
+      <div class="upload-box">
+        <p>Upload prescriptions, reports or scans</p>
+
+        <input type="file" />
+      </div>
+    </div>
+
+    <!-- NAV -->
+
+    <nav class="bottom">
+      <a onclick="show('home')">
+        <i class="fa fa-home"></i>
+        Home
+      </a>
+
+      <a>
+        <i class="fa fa-file-medical"></i>
+        Plans
+      </a>
+
+      <a>
+        <i class="fa fa-comments"></i>
+        Chat
+      </a>
+    </nav>
+
+    <script>
+      function show(id) {
+        document.querySelectorAll(".page").forEach((p) => {
+          p.classList.remove("active");
+        });
+
+        document.getElementById(id).classList.add("active");
+
+        window.scrollTo(0, 0);
+      }
+
+      function toggleMenu() {
+        let menu = document.getElementById("menu");
+
+        menu.style.display = menu.style.display === "block" ? "none" : "block";
+      }
+    </script>
+  </body>
 </html>
-
